@@ -55,6 +55,7 @@ def button(file):
     button=pygame.image.load(file).convert_alpha()
     button=pygame.transform.scale(button, (100, 40))
     return button
+
 #test=pygame.display.get_driver()
 state="title"
 next=False
@@ -65,53 +66,72 @@ btnLesson=button("btnLesson.png")
 btnBack= button("btnBack.png")
 btnExit=button("btnExit.png")
 btnMenu=button("btnMenu.png")
+btnNext=button("btnNext.png")
+
 
 welcome = bigfont.render(('WELCOME TO MY GAME'), True, (255,255,255))
-lesson = bigfont.render(('lessons coming soon...'), True, (0,0,0))
 result = bigfont.render(('results coming soon...'), True, (0,0,0))
 error = bigfont.render(('Error!!!!!!!!!'), True, (200,0,10))
 
 try:
     while keepGoing:
         clock.tick(60) #delay
-        screen.fill((205,131,180)) 
+        screen.fill((9,131,180)) 
+
         if state=="title":
             setBackground("title.png")
-            bm=screen.blit(btnMenu,(350,270))   #bm- menu button
+            bm=screen.blit(btnMenu,(350,270))#bm- menu button
+
         elif state=="menu":
            # buttons-------------------
             setBackground("menu.png")
-            bp=screen.blit(btnNew,(100,320))    #bp- rectangle arround button btnPLay
+            bp=screen.blit(btnNew,(100,320))   #bp- rectangle arround button btnPLay
             bq=screen.blit(btnQuiz,(225,320))    #bq- rectangle arround button btnQuiz
-            br=screen.blit(btnResult,(350,320))      #br- rectangle arround button btnResult
+            br=screen.blit(btnResult,(350,320))     #br- rectangle arround button btnResult
             bl=screen.blit(btnLesson,(475,320))    #bl- rectangle around buttonLesson
             be=screen.blit(btnExit,(600,320))    #be- rectangle around buttonExit
 
         elif state=="game":  
             # ---------------code for the game-------------------               
-            screen.blit(welcome, (20,50))   # print text welcome
-            bb=screen.blit(btnBack,(400,380))    #bb- rectangle around button btnBack
+            screen.blit(welcome,(20,50))   # print text welcome
+            bb=screen.blit(btnBack,(400,380))   #bb- rectangle around button btnBack
 
         elif state=="quiz":
             # ---------------code for the quiz-------------------
-            #variables
+            question=int(0)
             setBackground("quiz.png")
             btnNext=button("btnNext.png")
-            bn=screen.blit(btnNext,(650,380))    #bn- rectangle around button btnNext
-            bb=screen.blit(btnBack,(50,380))    #bb- rectangle around button btnBack
-            
-            
-            
-            
+            bnq=screen.blit(btnNext,(650,380))   #bnq- rectangle around button btnNext(questions)
+            bb=screen.blit(btnBack,(50,380))   #bb- rectangle around button btnBack
+
+        elif state=="questions":
+            if question<5:
+              setBackground("q"+str(question)+".png")
+              bnq=screen.blit(btnNext,(650,380))   
+              bb=screen.blit(btnBack,(50,380))  
+            elif question==5:
+              setBackground("q5.png")
+              bb=screen.blit(btnBack,(50,380))
+
         elif state=="result":
             # ---------------code for the quiz results-------------------
             screen.blit(result,(20,70))  # print text for results
             bb=screen.blit(btnBack,(400,380))    #bb- rectangle around button btnBack
             
         elif state=="lesson":
-            # ---------------code for the quiz results-------------------
-            screen.blit(lesson,(20,70))  # print text for results        
-            bb=screen.blit(btnBack,(400,380))    #bb- rectangle around button btnBack
+            # ---------------code for the lesson 
+            lessonNumber=0            
+            setBackground("lesson.png")
+            bnl=screen.blit(btnNext,(650,380)) #bnl - button next lesson
+            bb=screen.blit(btnBack,(50,380))
+
+        elif state=="lessons":
+          if lessonNumber<5:
+            setBackground("lesson"+str(lessonNumber)+".png")
+            bnl=screen.blit(btnNext,(650,380)) #bnl - button next lesson
+          elif lessonNumber==5:
+            setBackground("lesson5.png")
+            bb=screen.blit(btnBack,(50,380))
             
         else:
             screen.blit(error, (20,60))       # print text error
@@ -126,19 +146,23 @@ try:
             elif ev.type == MOUSEBUTTONDOWN:
                 pos=pygame.mouse.get_pos()
                 if bm.collidepoint(pos):
-                    state="menu"                
+                    state="menu"               
                 elif bp.collidepoint(pos):
                     state="game"
                 elif bq.collidepoint(pos):
                     state="quiz"
+                elif bnq.collidepoint(pos):
+                    state="questions"
+                    question+=1
                 elif br.collidepoint(pos):
                     state="result"   
                 elif bl.collidepoint(pos):
-                    state="lesson"            
+                    state="lesson"  
+                elif bnl.collidepoint(pos):
+                    state="lessons" 
+                    lessonNumber+=1         
                 elif bb.collidepoint(pos):
                     state="menu"
-                elif bn.collidepoint(pos):
-                    next=True
                 elif be.collidepoint(pos):
                     keepGoing = False
 
