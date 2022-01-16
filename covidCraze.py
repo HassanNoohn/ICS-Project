@@ -99,6 +99,8 @@ try:
         elif state=="quiz":
             # ---------------code for the quiz-------------------
             question=int(0)
+            correctAnswers=[]
+            userAnswers=[]
             setBackground("quiz.png")
             btnNext=button("btnNext.png")
             bnq=screen.blit(btnNext,(650,380))   #bnq- rectangle around button btnNext(questions)
@@ -126,6 +128,7 @@ try:
             bb=screen.blit(btnBack,(50,380))
 
         elif state=="lessons":
+            
           if lessonNumber<5:
             setBackground("lesson"+str(lessonNumber)+".png")
             bnl=screen.blit(btnNext,(650,380)) #bnl - button next lesson
@@ -158,9 +161,10 @@ try:
                     state="result"   
                 elif bl.collidepoint(pos):
                     state="lesson"  
-                elif bnl.collidepoint(pos):
-                    state="lessons" 
-                    lessonNumber+=1         
+                elif state=="lesson" or state=="lessons":
+                    if bnl.collidepoint(pos):
+                        state="lessons" 
+                        lessonNumber+=1         
                 elif bb.collidepoint(pos):
                     state="menu"
                 elif be.collidepoint(pos):
