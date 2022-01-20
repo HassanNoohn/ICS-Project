@@ -4,3 +4,6 @@ Purpose: The purpose of the game Covid Craze is to inform users of Covid-19 incl
  
 
 Use: To operate the game you must: use the left and right arrow key on your keyboard to move your character side to side and use the space bar to make your character jump. You may keep clicking hte space bar to constantly jump. If you get caught by the virus, you will start again but this time with more virsues. 
+
+
+Trouble-shooting tips: Avoid clicking on random spots on the screen as the program may crash.
